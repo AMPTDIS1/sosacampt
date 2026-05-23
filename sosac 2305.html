@@ -1,0 +1,528 @@
+<x-artifact type="text/html" name="sosac-huddle">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AMPT Live SOSAC - Friday, May 23</title>
+<style>
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --surface-2: #334155;
+    --border: #475569;
+    --text: #f8fafc;
+    --text-dim: #cbd5e1;
+    --text-mute: #94a3b8;
+    --amazon: #FF9900;
+    --green: #22c55e;
+    --pink: #ec4899;
+    --blue: #3b82f6;
+    --rose: #f43f5e;
+    --purple: #a78bfa;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.5;
+  }
+
+  body {
+    max-width: 640px;
+    margin: 0 auto;
+    padding: 16px 14px 32px;
+  }
+
+  /* Header */
+  .header {
+    text-align: center;
+    padding: 18px 14px 22px;
+    background: linear-gradient(135deg, rgba(255,153,0,0.15), rgba(236,72,153,0.10));
+    border: 1px solid rgba(255,153,0,0.30);
+    border-radius: 16px;
+    margin-bottom: 18px;
+  }
+  .header-brand {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1.4px; text-transform: uppercase;
+    color: var(--amazon);
+    margin-bottom: 8px;
+  }
+  .brand-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--amazon);
+  }
+  .header h1 {
+    font-size: 26px;
+    font-weight: 900;
+    line-height: 1.15;
+    letter-spacing: -0.5px;
+    margin-bottom: 6px;
+  }
+  .header .accent { color: var(--amazon); }
+  .header-date {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  /* Section */
+  section {
+    margin-bottom: 22px;
+  }
+  .eyebrow {
+    display: inline-block;
+    font-size: 11px; font-weight: 700;
+    letter-spacing: 1.4px; text-transform: uppercase;
+    padding: 5px 10px; border-radius: 999px;
+    margin-bottom: 12px;
+    color: var(--amazon);
+    background: rgba(255,153,0,0.12);
+    border: 1px solid rgba(255,153,0,0.30);
+  }
+  .eyebrow.pink { color: #f9a8d4; background: rgba(236,72,153,0.12); border-color: rgba(236,72,153,0.30); }
+  .eyebrow.green { color: #86efac; background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.30); }
+  .eyebrow.blue { color: #93c5fd; background: rgba(59,130,246,0.12); border-color: rgba(59,130,246,0.30); }
+  .eyebrow.rose { color: #fda4af; background: rgba(244,63,94,0.12); border-color: rgba(244,63,94,0.30); }
+  .eyebrow.purple { color: #c4b5fd; background: rgba(167,139,250,0.12); border-color: rgba(167,139,250,0.30); }
+
+  h2 {
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.2;
+    letter-spacing: -0.3px;
+    margin-bottom: 8px;
+  }
+  .accent { color: var(--amazon); }
+
+  .lede {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.55;
+    margin-bottom: 14px;
+  }
+
+  /* Cards */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 10px;
+  }
+  .card.mha { border-color: rgba(236,72,153,0.40); background: rgba(236,72,153,0.08); }
+  .card.safety { border-color: rgba(244,63,94,0.40); background: rgba(244,63,94,0.08); }
+  .card.standard { border-color: rgba(59,130,246,0.40); background: rgba(59,130,246,0.08); }
+
+  .card h3 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .card p {
+    font-size: 13.5px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+  .card b { color: var(--text); }
+
+  /* Performers — equal cards, no champion / no leader */
+  .perf-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--amazon);
+    margin: 14px 0 10px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .perf-section-title.purple { color: var(--purple); }
+
+  .perf-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  @media (min-width: 480px) {
+    .perf-grid { grid-template-columns: 1fr 1fr 1fr 1fr; }
+  }
+
+  .perf-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .perf-card.duration {
+    border-color: rgba(255,153,0,0.40);
+    background: rgba(255,153,0,0.06);
+  }
+  .perf-card.picklist {
+    border-color: rgba(167,139,250,0.40);
+    background: rgba(167,139,250,0.06);
+  }
+
+  .perf-name {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .metric-value {
+    font-size: 24px;
+    font-weight: 900;
+    color: var(--amazon);
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .perf-card.picklist .metric-value { color: var(--purple); }
+  .metric-unit {
+    font-size: 11px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+  .perf-tag {
+    display: inline-block;
+    padding: 3px 8px;
+    background: rgba(34,197,94,0.15);
+    border: 1px solid rgba(34,197,94,0.30);
+    color: #86efac;
+    border-radius: 999px;
+    font-size: 9.5px;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+  }
+  .perf-tag.purple {
+    background: rgba(167,139,250,0.15);
+    border-color: rgba(167,139,250,0.30);
+    color: #c4b5fd;
+  }
+  .bonus-note {
+    margin-top: 10px;
+    padding: 10px 12px;
+    background: rgba(34,197,94,0.10);
+    border: 1px dashed rgba(34,197,94,0.40);
+    border-radius: 10px;
+    font-size: 12.5px;
+    color: var(--text-dim);
+  }
+  .bonus-note b { color: #86efac; }
+
+  /* Do/Don't compact */
+  .dodont {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  @media (min-width: 480px) {
+    .dodont { grid-template-columns: 1fr 1fr; }
+  }
+  .dd {
+    padding: 12px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+  }
+  .dd.do { border-color: rgba(34,197,94,0.40); }
+  .dd.dont { border-color: rgba(244,63,94,0.40); }
+  .dd-head {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 1px;
+    margin-bottom: 4px;
+  }
+  .dd.do .dd-head { color: #86efac; }
+  .dd.dont .dd-head { color: #fda4af; }
+  .dd-mark {
+    width: 20px; height: 20px;
+    border-radius: 6px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-weight: 800;
+    font-size: 12px;
+  }
+  .dd.do .dd-mark { background: rgba(34,197,94,0.20); }
+  .dd.dont .dd-mark { background: rgba(244,63,94,0.20); }
+  .dd-body {
+    font-size: 13px;
+    color: var(--text-dim);
+    line-height: 1.45;
+  }
+
+  /* Tasks */
+  .task-section {
+    margin-bottom: 14px;
+  }
+  .task-section h4 {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--amazon);
+    margin-bottom: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .task-section.support h4 { color: var(--blue); }
+
+  .task-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    align-items: center;
+    padding: 10px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    margin-bottom: 5px;
+  }
+  .task-station {
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+  .task-person {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text);
+    text-align: right;
+  }
+  .task-person.open {
+    color: var(--text-mute);
+    font-weight: 500;
+    font-style: italic;
+  }
+  .task-row.special {
+    border-color: rgba(236,72,153,0.40);
+    background: rgba(236,72,153,0.08);
+  }
+
+  /* Closing */
+  .closing {
+    text-align: center;
+    padding: 26px 18px;
+    background: linear-gradient(135deg, rgba(255,153,0,0.12), rgba(34,197,94,0.10));
+    border: 1px solid rgba(255,153,0,0.30);
+    border-radius: 16px;
+    margin-top: 8px;
+  }
+  .closing-emoji {
+    font-size: 36px;
+    margin-bottom: 8px;
+  }
+  .closing h2 {
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .closing p {
+    font-size: 14px;
+    color: var(--text-dim);
+    line-height: 1.55;
+  }
+
+  .chips {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 12px;
+    justify-content: center;
+  }
+  .chip {
+    padding: 5px 11px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 11.5px;
+    font-weight: 600;
+    color: var(--text-dim);
+  }
+</style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-brand">
+      <span class="brand-dot"></span>
+      <span>AMPT Live SOSAC</span>
+    </div>
+    <h1><span class="accent">Friday</span> Huddle</h1>
+    <div class="header-date">May 23, 2026</div>
+  </header>
+
+  <!-- 1. SUCCESS STORY / ANNOUNCEMENT -->
+  <section>
+    <div class="eyebrow pink">Announcement</div>
+    <h2>Special <span class="accent">thanks</span> for yesterday</h2>
+    <p class="lede">Massive shoutout to <b>everybody</b> for yesterday's effort — the team delivered. Keep that energy today.</p>
+
+    <div class="card mha">
+      <h3>📨 Interested in Line Support?</h3>
+      <p>If you'd like to apply for <b>line support</b>, please send your <b>CV to your manager</b>. Don't miss the chance — get yours in.</p>
+    </div>
+
+    <!-- TOP PERFORMERS — BEST AVG DURATION -->
+    <div class="eyebrow" style="margin-top:16px;">🏆 Yesterday's Top Performers</div>
+
+    <div class="perf-section-title">⏱ Best Avg Duration</div>
+    <div class="perf-grid">
+      <div class="perf-card duration">
+        <div class="perf-name">Mohamed Farah</div>
+        <div class="metric-value">08:38</div>
+        <div class="metric-unit">avg duration</div>
+        <span class="perf-tag">Top Performer</span>
+      </div>
+      <div class="perf-card duration">
+        <div class="perf-name">Azan</div>
+        <div class="metric-value">08:41</div>
+        <div class="metric-unit">avg duration</div>
+        <span class="perf-tag">Top Performer</span>
+      </div>
+      <div class="perf-card duration">
+        <div class="perf-name">Mukhtar</div>
+        <div class="metric-value">08:50</div>
+        <div class="metric-unit">avg duration</div>
+        <span class="perf-tag">Top Performer</span>
+      </div>
+      <div class="perf-card duration">
+        <div class="perf-name">Kiran</div>
+        <div class="metric-value">09:07</div>
+        <div class="metric-unit">avg duration</div>
+        <span class="perf-tag">Top Performer</span>
+      </div>
+    </div>
+
+    <!-- TOP PERFORMERS — BEST PICKLIST COUNT -->
+    <div class="perf-section-title purple">📋 Best Picklist Count</div>
+    <div class="perf-grid">
+      <div class="perf-card picklist">
+        <div class="perf-name">Azan</div>
+        <div class="metric-value">12</div>
+        <div class="metric-unit">picklists</div>
+        <span class="perf-tag purple">Top Performer</span>
+      </div>
+      <div class="perf-card picklist">
+        <div class="perf-name">Mukhtar</div>
+        <div class="metric-value">12</div>
+        <div class="metric-unit">picklists</div>
+        <span class="perf-tag purple">Top Performer</span>
+      </div>
+      <div class="perf-card picklist">
+        <div class="perf-name">Kiran</div>
+        <div class="metric-value">12</div>
+        <div class="metric-unit">picklists</div>
+        <span class="perf-tag purple">Top Performer</span>
+      </div>
+      <div class="perf-card picklist">
+        <div class="perf-name">Said</div>
+        <div class="metric-value">11</div>
+        <div class="metric-unit">picklists</div>
+        <span class="perf-tag purple">Top Performer</span>
+      </div>
+    </div>
+
+    <div class="bonus-note">
+      🙌 <b>Belated shoutout:</b> <b style="color:var(--text);">Mo Ali</b> — <b style="color:var(--text);">11 picklists</b> the day before. Missed mentioning yesterday — well done!
+    </div>
+  </section>
+
+  <!-- 2. SAFETY TIP -->
+  <section>
+    <div class="eyebrow rose">Safety Tip of the Day</div>
+    <h2>Stay <span class="accent">proactive</span> with VSA</h2>
+
+    <div class="card safety">
+      <h3>🦺 PPE checks on the yard &amp; at dispatch</h3>
+      <p>Always be <b>proactive with VSA</b> on the yard. Check that <b>all PPE is worn correctly</b> — both on the yard and during dispatch. If you see something, say something.</p>
+    </div>
+
+    <div class="dodont">
+      <div class="dd do">
+        <div class="dd-head"><span class="dd-mark">✓</span> Do</div>
+        <div class="dd-body">Verify hi-vis, safety shoes &amp; gloves before stepping on the yard.</div>
+      </div>
+      <div class="dd dont">
+        <div class="dd-head"><span class="dd-mark">✕</span> Don't</div>
+        <div class="dd-body">Walk past a missing-PPE situation — flag it, fix it.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. STANDARD TIP -->
+  <section>
+    <div class="eyebrow blue">Standard Tip of the Day</div>
+    <h2>Finger Scan &amp; <span class="accent">end of shift</span></h2>
+
+    <div class="card standard">
+      <h3>🔐 Use it, return it, finish strong</h3>
+      <p>Use your <b>finger scan</b> while doing Pick &amp; Stage and — very important — <b>return it to the charging cabinet</b> at the end of your shift.</p>
+      <p style="margin-top:8px;">Shift ends at <b>13:00</b>, not before. We've seen AAs leaving the floor at <b>12:49</b> — that is <b>not acceptable</b> and counts as abandoning the job. If you have a genuine need, <b>inform your supervisor or the manager on shift</b>.</p>
+    </div>
+
+    <div class="chips" style="justify-content:flex-start;">
+      <span class="chip">Shift ends 13:00</span>
+      <span class="chip">Return finger scan</span>
+      <span class="chip">Speak to supervisor</span>
+    </div>
+  </section>
+
+  <!-- 4. TASK ASSIGNMENT -->
+  <section>
+    <div class="eyebrow">Today's Task Assignment</div>
+    <h2>Know your <span class="accent">station</span></h2>
+    <p class="lede">Find your name, head to your area, and check in with your supervisor if anything is unclear.</p>
+
+    <div class="task-section">
+      <h4>Pick &amp; Stage Stations</h4>
+      <div class="task-row"><div class="task-station">Cages A</div><div class="task-person">Gure, Yahya</div></div>
+      <div class="task-row"><div class="task-station">Yard Assistance A</div><div class="task-person open">Open</div></div>
+      <div class="task-row"><div class="task-station">Cages A-B</div><div class="task-person open">Open</div></div>
+      <div class="task-row"><div class="task-station">Yard Assistance A-B</div><div class="task-person open">Open</div></div>
+      <div class="task-row"><div class="task-station">Cages B</div><div class="task-person">Mahadalle, Fardowsa Cabdulahi</div></div>
+      <div class="task-row"><div class="task-station">Yard Assistance B</div><div class="task-person open">Open</div></div>
+      <div class="task-row"><div class="task-station">Gate</div><div class="task-person">Abdikhair, Mohamed A</div></div>
+      <div class="task-row"><div class="task-station">Holding</div><div class="task-person">Salad, Farhan Y</div></div>
+      <div class="task-row"><div class="task-station">Canopy B</div><div class="task-person">AHMED, Abdirahman</div></div>
+      <div class="task-row"><div class="task-station">Canopy A</div><div class="task-person">ahmed, MO Ali</div></div>
+      <div class="task-row special"><div class="task-station">Problem Solver</div><div class="task-person">Kaur, Anterpreet</div></div>
+      <div class="task-row"><div class="task-station">Ambassador</div><div class="task-person open">Open</div></div>
+    </div>
+
+    <div class="task-section support">
+      <h4>Support &amp; Readiness</h4>
+      <div class="task-row"><div class="task-station">Induct Readiness</div><div class="task-person">Salad, Farhan Y</div></div>
+      <div class="task-row"><div class="task-station">Cardboard</div><div class="task-person">Gaddam, Bala Sai Krishna</div></div>
+      <div class="task-row"><div class="task-station">Devices on Charge</div><div class="task-person">Nzimande, Patricia N</div></div>
+    </div>
+
+    <div class="chips" style="justify-content:flex-start;">
+      <span class="chip">⚠ "Open" stations — see supervisor</span>
+      <span class="chip">Don't swap without telling lead</span>
+    </div>
+  </section>
+
+  <!-- 5. CLOSING -->
+  <div class="closing">
+    <div class="closing-emoji">💪</div>
+    <h2>Have a <span class="accent">great day</span>, team!</h2>
+    <p>Take care of each other, take pride in the work, and let's make today a safe and strong shift.</p>
+    <div class="chips">
+      <span class="chip">💛 Connect</span>
+      <span class="chip">🏆 Recognize</span>
+      <span class="chip">🛡 Protect</span>
+    </div>
+  </div>
+
+</body>
+</html>
+</x-artifact>
